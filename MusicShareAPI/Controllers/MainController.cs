@@ -39,8 +39,8 @@ namespace MusicShareAPI.Controllers
             _licenseDataService = licenseDataService;
             _emailDataService = emailDataService;
             _configuration = configuration;
-            RecurringJob.AddOrUpdate("verifySongs", () => this.VerifySongsCopyright(), "*/1 * * * *");
-            RecurringJob.AddOrUpdate("sendEmails", () => this.SendEmails(), "*/1 * * * *");
+            RecurringJob.AddOrUpdate("verifySongs", () => this.VerifySongsCopyright(), _configuration["Hangfire:Timespan"]);
+            RecurringJob.AddOrUpdate("sendEmails", () => this.SendEmails(), _configuration["Hangfire:Timespan"]);
         }
 
         [HttpPost]

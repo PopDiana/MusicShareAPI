@@ -18,8 +18,10 @@ namespace MusicShareAPI.DataServices
 
         public Licenses GetByTitle(string SongTitle)
         {
-            var license = _dbContext.Licenses.Where(l => SongTitle.ToLower().Contains(l.Title.ToLower()) &&
-            SongTitle.ToLower().Contains(l.Artist.ToLower())).FirstOrDefault();
+            var license = _dbContext.Licenses.Where(l => !SongTitle.ToLower().Contains("cover")
+            && SongTitle.ToLower().Contains(l.Title.ToLower()) 
+            && (SongTitle.ToLower().Contains(l.Artist.ToLower()) 
+            || l.Artist.ToLower().Contains(SongTitle.ToLower()))).FirstOrDefault();
             return license;
         }
     }
